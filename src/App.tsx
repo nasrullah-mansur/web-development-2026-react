@@ -1,9 +1,19 @@
+import Footer from "./layout/Footer";
+import Header from "./layout/Header";
+import ProductSection from "./sections/ProductSection";
 
 export default function App() {
+
+
+
   return (
-    <h1 className="text-red-400">
-      <span>hello</span>
-    </h1>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-1">
+        <ProductSection />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
