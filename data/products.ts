@@ -1,18 +1,5 @@
 export const products = [
-    {
-        "id": 4,
-        "title": "Red Lipstick",
-        "price": 12.99,
-        "ratting": 4.36,
-        "image": "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp"
-    },
-    {
-        "id": 5,
-        "title": "Red Nail Polish",
-        "price": 8.99,
-        "ratting": 4.32,
-        "image": "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/thumbnail.webp"
-    },
+
     {
         "id": 6,
         "title": "Calvin Klein CK One",

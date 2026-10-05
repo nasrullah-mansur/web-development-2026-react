@@ -1,16 +1,16 @@
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
-import ProductSection from "./sections/ProductSection";
+import ProductContainer from "./products/productContainer";
+
+import { products } from "../data/products";
 
 export default function App() {
 
-
-
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header products={products} />
       <main className="flex-1">
-        <ProductSection />
+        <ProductContainer products={products} />
       </main>
       <Footer />
     </div>

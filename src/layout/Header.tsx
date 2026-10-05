@@ -1,13 +1,8 @@
-
-
-
-
-
-export default function Header() {
+export default function Header({ products }) {
 
 
     return (
-        <header className="border-b py-3">
+        <header className="border-b border-gray-200 py-3">
             <div className="container mx-auto ">
                 <div className="flex items-center justify-between">
                     <a className="font-bold text-2xl" href="#">LOGO</a>
@@ -19,6 +14,8 @@ export default function Header() {
                         <li><a href="#">Testimonial</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
+
+                    <p>Product Count: {products.length}</p>
                 </div>
             </div>
         </header>
