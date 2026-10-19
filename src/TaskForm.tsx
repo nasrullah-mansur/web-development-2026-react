@@ -1,9 +1,18 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-export default function TaskForm({ onSubmit }) {
+type Props = {
+    onSubmit: any;
+    editItem: any;
+    onUpdate: any;
+}
+
+export default function TaskForm({ onSubmit, editItem, onUpdate }: Props) {
+
+
 
     const [formData, setFormData] = useState({
         title: "",
@@ -20,7 +29,13 @@ export default function TaskForm({ onSubmit }) {
         }
 
 
-        onSubmit(formData);
+        if (editItem) {
+            onUpdate({ ...formData, id: editItem.id });
+        }
+        else {
+            onSubmit(formData); // Create new task;
+
+        }
 
         setFormData({
             title: "",
@@ -28,6 +43,22 @@ export default function TaskForm({ onSubmit }) {
         })
 
     }
+
+
+
+    useEffect(() => {
+
+        if (editItem) {
+            setFormData({
+                title: editItem.title,
+                description: editItem.description
+            })
+        }
+
+
+    }, [editItem]);
+
+
 
 
     return (
@@ -91,7 +122,9 @@ export default function TaskForm({ onSubmit }) {
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 font-medium text-white shadow-sm transition hover:bg-indigo-700"
                 >
                     <Plus size={19} />
-                    Add Task
+
+                    {editItem ? "Update Task" : "Add Task"}
+
                 </button>
             </form>
         </section>

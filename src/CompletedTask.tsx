@@ -2,7 +2,14 @@ import { CheckCircle2, ClipboardList } from 'lucide-react';
 import type { Todo } from "../types/todo.ts";
 import TodoItem from './TodoItem';
 
-export default function CompletedTask({ completedTasks, onRunning }: { completedTasks: Todo[], onRunning: (id: string | number) => void }) {
+type Props = {
+    completedTasks: Todo[];
+    onRunning: (id: string | number) => void;
+    onDelete: (id: string | number) => void;
+    onEdit: (id: string | number) => void;
+}
+
+export default function CompletedTask({ completedTasks, onRunning, onDelete, onEdit }: Props) {
     return (
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
@@ -28,7 +35,14 @@ export default function CompletedTask({ completedTasks, onRunning }: { completed
 
             <div className="space-y-3">
                 {completedTasks.map((todo) => (
-                    <TodoItem onRunning={onRunning} key={todo.id} todo={todo} />
+                    <TodoItem
+                        onEdit={onEdit}
+                        onCompleted={() => { }}
+                        onDelete={onDelete}
+                        onRunning={onRunning}
+                        key={todo.id}
+                        todo={todo}
+                    />
                 ))}
             </div>
 

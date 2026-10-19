@@ -4,7 +4,9 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { todos as initTodos } from "../data/todo";
+import type { Todo } from "../types/todo";
 import CompletedTask from "./CompletedTask";
 import RunningTask from "./RunningTask";
 import TaskForm from "./TaskForm";
@@ -12,6 +14,8 @@ import TaskForm from "./TaskForm";
 export default function App() {
 
   const [todos, setTodos] = useState(initTodos);
+  const [editId, setEditId] = useState<null | number | string>(null);
+
 
   const runningTasks = todos.filter((todo) => !todo.completed);
   const completedTasks = todos.filter((todo) => todo.completed);
@@ -71,6 +75,47 @@ export default function App() {
     setTodos(updateTodos);
   }
 
+  const handleDelete = (id: number | string) => {
+
+    const updateTodosAfterRemove = todos.filter(item => item.id != id);
+
+    setTodos(updateTodosAfterRemove);
+
+    toast.success("Todo removed successfully");
+
+  }
+
+
+  // Edit todo;
+
+  const editItem = editId ? todos.find(item => item.id == editId) : null;
+
+  const handleEdit = (id: number | string) => {
+
+    setEditId(id);
+
+  }
+
+  const handleUpdate = (todo: Todo) => {
+    console.log(todo);
+
+
+    const updateTodosAfterUpdateAItem = todos.map(item => {
+      if (item.id == todo.id) {
+        return todo;
+      }
+
+      return item;
+    });
+
+    setTodos(updateTodosAfterUpdateAItem)
+
+    toast.success("Todo updated successfully");
+
+    setEditId(null);
+
+  }
+
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-800 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -92,15 +137,15 @@ export default function App() {
         {/* Main Layout */}
         <div className="grid items-start gap-6 lg:grid-cols-[350px_minmax(0,1fr)]">
           {/* Left Side - Todo Form */}
-          <TaskForm onSubmit={handleSubmit} />
+          <TaskForm onUpdate={handleUpdate} editItem={editItem} onSubmit={handleSubmit} />
 
           {/* Right Side - Task Lists */}
           <section className="min-w-0 space-y-6">
             {/* Running Tasks */}
-            <RunningTask onCompleted={handleCompleted} runningTasks={runningTasks} />
+            <RunningTask onEdit={handleEdit} onDelete={handleDelete} onCompleted={handleCompleted} onRunning={handleRunning} runningTasks={runningTasks} />
 
             {/* Completed Tasks */}
-            <CompletedTask onRunning={handleRunning} completedTasks={completedTasks} />
+            <CompletedTask onEdit={handleEdit} onDelete={handleDelete} onRunning={handleRunning} completedTasks={completedTasks} />
           </section>
         </div>
       </div>

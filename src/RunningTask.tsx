@@ -3,11 +3,14 @@ import type { Todo } from "../types/todo.ts";
 import TodoItem from './TodoItem';
 
 type Props = {
-    runningTasks: Todo[],
-    onCompleted: (id: number | string) => void,
+    runningTasks: Todo[];
+    onCompleted: (id: number | string) => void;
+    onDelete: (id: number | string) => void;
+    onRunning: (id: number | string) => void;
+    onEdit: (id: number | string) => void;
 }
 
-export default function RunningTask({ runningTasks, onCompleted }: Props) {
+export default function RunningTask({ runningTasks, onCompleted, onDelete, onRunning, onEdit }: Props) {
     return (
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
@@ -33,7 +36,7 @@ export default function RunningTask({ runningTasks, onCompleted }: Props) {
 
             <div className="space-y-3">
                 {runningTasks.map((todo) => (
-                    <TodoItem onCompleted={onCompleted} key={todo.id} todo={todo} />
+                    <TodoItem onEdit={onEdit} onDelete={onDelete} onCompleted={onCompleted} onRunning={onRunning} key={todo.id} todo={todo} />
                 ))}
             </div>
 

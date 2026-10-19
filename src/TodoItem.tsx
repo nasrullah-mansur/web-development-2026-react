@@ -3,12 +3,14 @@ import { Pencil, Trash2 } from "lucide-react";
 import type { Todo } from "../types/todo.ts";
 
 type Props = {
-    todo: Todo,
-    onCompleted: (id: string | number) => void,
-    onRunning: (id: string | number) => void
+    todo: Todo;
+    onCompleted: (id: string | number) => void;
+    onRunning: (id: string | number) => void;
+    onDelete: (id: string | number) => void;
+    onEdit: (id: string | number) => void;
 }
 
-export default function TodoItem({ todo, onCompleted, onRunning }: Props) {
+export default function TodoItem({ todo, onCompleted, onRunning, onDelete, onEdit }: Props) {
 
     const handleChange = () => {
         if (todo.completed) {
@@ -20,6 +22,13 @@ export default function TodoItem({ todo, onCompleted, onRunning }: Props) {
         else {
             onCompleted(todo.id);
         }
+    }
+
+    const handleDelete = () => {
+        const isConfirm = confirm("are you sure you want to delete it?");
+        if (!isConfirm) return;
+
+        onDelete(todo.id);
     }
 
     return (
@@ -66,6 +75,7 @@ export default function TodoItem({ todo, onCompleted, onRunning }: Props) {
             {/* Action Buttons */}
             <div className="flex shrink-0 items-center gap-1.5">
                 <button
+                    onClick={() => onEdit(todo.id)}
                     type="button"
                     title="Edit Task"
                     aria-label={`Edit ${todo.title}`}
@@ -75,6 +85,7 @@ export default function TodoItem({ todo, onCompleted, onRunning }: Props) {
                 </button>
 
                 <button
+                    onClick={handleDelete}
                     type="button"
                     title="Delete Task"
                     aria-label={`Delete ${todo.title}`}
