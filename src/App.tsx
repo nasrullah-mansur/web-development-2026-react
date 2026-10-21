@@ -1,38 +1,40 @@
-import CounterDisplay from "./CounterDisplay";
-import Decrement from "./Decrement";
-import Increment from "./Increment";
-import ResetCounter from "./ResetCounter";
+import { products } from "../data/products";
+import Navbar from "./Navbar";
+import ProductItem from "./components/ProductItem";
 
 export default function App() {
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+    <>
+      <Navbar />
+      <section className="min-h-screen bg-slate-50 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-        {/* Heading */}
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-slate-900">
-            Counter App
-          </h1>
-          <p className="mt-2 text-sm text-slate-500">
-            A simple counter using React
-          </p>
+          {/* Section Header */}
+          <div className="mb-10 text-center">
+            <span className="mb-3 inline-block rounded-full bg-indigo-50 px-4 py-1.5 text-sm font-semibold text-indigo-600">
+              Our Collection
+            </span>
+
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Explore Our Products
+            </h2>
+
+            <p className="mx-auto mt-3 max-w-xl text-slate-500">
+              Discover our collection of quality products at great prices.
+            </p>
+          </div>
+
+          {/* Product Grid */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {products.map((product) => (
+              <ProductItem key={product.id} product={product} />
+            ))}
+          </div>
+
         </div>
+      </section>
 
-        {/* Counter Display */}
-        <CounterDisplay />
 
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-3">
-          <Decrement />
-          <Increment />
-
-        </div>
-
-        {/* Reset Button */}
-        <ResetCounter />
-
-      </div>
-    </div>
+    </>
   )
 }
