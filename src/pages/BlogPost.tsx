@@ -1,15 +1,18 @@
 import { NavLink, useLoaderData } from "react-router";
-import { posts } from "../../data/post";
+import { usePosts } from "../../store/post.store";
 
 export default function BlogPost() {
 
     const postId = useLoaderData();
+
+    const { posts } = usePosts();
 
     const post = posts.find(post => post.id == postId);
 
 
 
     return (
+
         <div className="max-w-[800px] border border-gray-300 p-4 mx-auto">
             <NavLink className={"bg-red-400 text-white px-3 py-1.5"} to={"/"}>Home</NavLink>
 

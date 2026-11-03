@@ -1,5 +1,12 @@
+import { create } from 'zustand';
 
-export const posts = [
+type Post = {
+    id: number | string;
+    title: string;
+    body: string;
+}
+
+const initialPosts: Post[] = [
     {
         "id": 1,
         "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
@@ -52,3 +59,33 @@ export const posts = [
         "body": "quo et expedita modi cum officia vel magni\ndoloribus qui repudiandae\nvero nisi sit\nquos veniam quod sed accusamus veritatis error"
     }
 ]
+
+
+type BearState = {
+    posts: Post[],
+    addPost: (newPost: Post) => void;
+    deletePost: (id: string | number) => void;
+}
+
+// addPost: (newPost: Post) => {
+//     return set((posts) => {
+//         return {
+//             ...posts,
+//             newPost,
+//         }
+//     });
+// },
+
+export const usePosts = create<BearState>((set) => ({
+    posts: initialPosts,
+    addPost: (newPost: Post) => set((state) => ({
+        posts: [
+            ...state.posts,
+            newPost
+        ]
+    })),
+    deletePost: (id: string | number) => set(state => ({
+        posts: state.posts.filter(item => item.id !== id),
+    }))
+
+}));
